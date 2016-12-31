@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Youtube MP3 Downloader</title>
+    <!-- CSS by https://codepen.io/frytyler/pen/EGdtg -->
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <div id="playlist"></div>
+    <div id="linklist"></div>
+    <div class="download">
+    	<h1>Youtube MP3 Downloader</h1>
+        <form method="post" onsubmit="return processDownload();">
+        	<input id="url" type="text" name="url" placeholder="URL" required="required"/>
+          <input id="fake-path" type="input" placeholder="Select Download Path" required="required"/>
+          <input id="path" type="file" name="path" placeholder="Download Path" webkitdirectory/>
+          <button type="submit" class="btn btn-primary btn-block btn-large">
+            Start Download</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/function.js"></script>
+  </body>
+</html>

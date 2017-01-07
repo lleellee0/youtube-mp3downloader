@@ -8,12 +8,19 @@
   </head>
   <body>
     <div id="playlist"></div>
-    <div id="linklist"></div>
+    <div id="download-modal" class="absolute-center is-responsive z-minus1">
+      <div id="linklist" class="is-overflow"></div>
+      <div id="download-button-wrapper">
+        <span id="checked-checkbox-count"></span>/<span id="checkbox-count"></span>
+        <button id="download-button" class="btn btn-primary float-right">
+          Download</button>
+      </div>
+    </div>
     <div class="download">
     	<h1>Youtube MP3 Downloader</h1>
-        <form method="post" onsubmit="return processDownload();">
-        	<input id="url" type="text" name="url" placeholder="URL" required="required"/>
-          <input id="fake-path" type="input" placeholder="Select Download Path" required="required"/>
+        <form method="post" onsubmit="return showDownloadModal();">
+        	<input id="url" class="input-text" type="text" name="url" placeholder="URL" required="required"/>
+          <input id="fake-path" class="input-text" type="input" placeholder="Select Download Path" required="required"/>
           <input id="path" type="file" name="path" placeholder="Download Path" webkitdirectory/>
           <button type="submit" class="btn btn-primary btn-block btn-large">
             Start Download</button>

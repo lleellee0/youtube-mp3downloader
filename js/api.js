@@ -3374,10 +3374,8 @@
                 console.log(a);
                 return $.each(a, function(a, b) {
                     c[a] = "hash" == a || "title" == a ? b : parseInt(b)
-
                 }),
                 0 < c.error ? (f(), !1) : void(0 < c.ce && 0 < c.sid ? myApi("http://" + b[c.sid] + ".yt-downloader.org/download.php?id=" + c.hash + "&d=" + d, a.title) : myApi("http://" + b[c.sid] + ".yt-downloader.org/download.php?id=" + c.hash + "&d=" + d, a.title));
-
             }
         }), !1) : (f(), !1)
     })
@@ -3402,14 +3400,28 @@ function myApi(url, title) {
   }
 
   var http = require('http');
+  var completeTimer;
+
   try {
     http.get(url, function(res) {
-      var file = fs.createWriteStream($('#fake-path').val() + getPathDelimiter() + count++ + "_" + title + ".mp3");
+      var file = fs.createWriteStream($('#fake-path').val() + getPathDelimiter() + pad(count++, 3) + "_" + title + ".mp3");
       res.pipe(file);
       res.on('end', function() {
-        console.log(count + " " + completeCount++);
-        if(count === completeCount+1)
-          alert('Complete.');
+        console.log(count + " " + completeCount++ + " " + title + "complete.");
+        if(count === completeCount+1) {
+          clearTimeout(completeTimer);
+          completeTimer = setTimeout(function() {
+            alert('Complete.');
+            require('./js/function.js').disposeModal();
+            $('#playlist').html('');
+            $('#linklist').html('');
+            count = 1;
+            completeCount = 1;
+          }, 10000);  // 10초정도 대기
+        }
+      });
+      res.on('error', function(error) {
+        console.log('e : ' + error);
       });
     });
   } catch(exception) {
@@ -3448,4 +3460,10 @@ function getPathDelimiter() {
 		 	break;
   }
   return pathDelimiter;
+}
+
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
